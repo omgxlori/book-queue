@@ -1,0 +1,135 @@
+#addBookButton {
+    z-index: 100;
+    background-color: rgb(219, 219, 219);
+    color: white; /* White text */
+    padding: 10px 15px; /* Padding around the text */
+    border: none; /* Remove the border */
+    border-radius: 20px; /* Rounded corners */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    font-size: 20px; /* Increase font size */
+  }
+  
+  /* Optional: Add a hover effect */
+ #addBookButton:hover {
+    background-color: red !important;
+  }
+
+  input[type=radio] {
+    display: inline-block; /* Ensure they are displayed inline */
+    visibility: visible; /* Ensure they are visible */
+    opacity: 1; /* Ensure full opacity */
+    position: static; /* Ensure no positioning issues */
+  }
+
+  form {
+    background-color: #f9f9f9; /* Light background color */
+    padding: 20px; /* Padding around the form */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    max-width: 400px; /* Limit the width */
+    margin: auto; /* Center the form */
+    font-family: Arial, sans-serif; /* Clean font */
+  }
+  
+  /* Form labels */
+  label {
+    display: block;
+    font-weight: bold;
+    padding: 0px;
+    margin-bottom: 0px;
+    color: #333; /* Dark text color */
+  }
+
+  label[for="author"] {
+    font-weight: bold;
+    color: blue;
+    margin-top: 30px;
+  }
+
+  label[for="genre"] {
+    font-weight: bold;
+    color: green;
+    margin-top: 30px;
+  }
+
+  label[for="bookCover"] {
+    font-weight: bold;
+    color: red;
+    margin-top: 30px;
+  }
+
+  label[for="bookStatus"] {
+    font-weight: bold;
+    color: orange;
+    margin-top: 60px;
+  }
+
+  label[for="toRead"],
+  label[for="currentlyReading"],
+  label[for="booksCompleted"] {
+    font-weight: lighter;
+    color: teal;
+    font-size: 16px;
+  }
+  
+  /* Input fields */
+  input[type="text"],
+  input[type="file"],
+  select {
+    padding: 5px; /* Padding inside the input */
+    margin-top: 5px;
+    border: 1px solid #ccc; /* Light border */
+    border-radius: 5px; /* Rounded corners */
+    box-sizing: border-box;
+    font-size: 16px; /* Increase font size */
+  }
+
+/* Add space between radio button group */
+.radio-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row; /* Stack the radio buttons vertically */
+    }
+      
+.radio-option {
+    display: flex;
+    align-items: center; /* Align radio button and label vertically */
+    margin-bottom: 10px; /* Add space between each radio option */
+    }
+      
+.radio-option input[type="radio"] {
+    margin-right: 10px; /* Add space between radio button and label */
+    }
+  
+  /* Radio buttons alignment */
+  /* input[type="radio"] {
+    width: auto; /* Ensure radio buttons are not full-width */
+    /* margin-right: 10px; /* Space between button and label */
+  /* }
+  
+  /* Style the submit button */
+  button {
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+    padding: 10px 20px; /* Padding around the text */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 16px; /* Increase font size */
+    transition: background-color 0.3s ease; /* Smooth hover transition */
+  }
+  
+  /* Hover effect for button */
+  button:hover {
+    background-color: #45a049; /* Darker green on hover */
+  }
+  
+  /* Optional: Add a background color for the form container */
+  .container {
+    background-color: #fff; /* White background */
+    padding: 20px; /* Padding around the form */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    max-width: 500px; /* Limit the width */
+    margin: 20px auto; /* Center the form */
+  }

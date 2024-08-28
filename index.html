@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Book Queue</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <header>
+      <h1>Book Queue</h1>
+    </header>
+
+    <button id="addBookButton">+</button>
+  <form id="bookForm" style="display:none;">
+    <div>
+        <label for="bookTitle">Book Title: </label>
+        <input type="text" id="bookTitle" name="bookTitle" placeholder="Book Title">
+    </div>
+
+    <br>
+
+    <div>
+        <label for="author">Author: </label>
+        <input type="text" id="author" name="author" placeholder="Author">
+    </div>
+
+    <br>
+
+    <div>
+        <label for="genre">Genre: </label>
+        <input type="text" id="genre" name="genre" placeholder="Genre">
+    </div>
+
+    <br>
+
+    <div>
+        <label for="bookCover">(optional) Upload Book Cover:</label>
+        <input type="file" id="bookCover" name="bookCover" accept="image/*">
+    </div>
+
+    <br>
+
+    <div class="radio-group">
+    <label for="bookStatus">Book Status: </label>
+    </div>
+    <div class="radio-option">
+    <input type="radio" id="toRead" name="bookStatus" value="toRead">
+    <label for="toRead">Books To Read</label>
+    </div>
+    <br>
+    <div class="radio-option">
+    <input type="radio" id="currentlyReading" name="bookStatus" value="currentlyReading">
+    <label for="currentlyReading">Currently Reading</label>  
+    </div>
+    <br>
+    <div class="radio-option">
+    <input type="radio" id="booksCompleted" name="bookStatus" value="booksCompleted">
+    <label for="booksCompleted">Books Completed</label> 
+    </div>
+
+    <br>
+
+    <div>
+        <button id="submitBook">Submit</button>
+    </div>
+  </form>
+
+
+  <script src="script.js"></script>
+  </body>
