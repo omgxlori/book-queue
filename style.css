@@ -1,135 +1,336 @@
-#addBookButton {
-    z-index: 100;
-    background-color: rgb(219, 219, 219);
-    color: white; /* White text */
-    padding: 10px 15px; /* Padding around the text */
-    border: none; /* Remove the border */
-    border-radius: 20px; /* Rounded corners */
-    cursor: pointer; /* Change cursor to pointer on hover */
-    font-size: 20px; /* Increase font size */
-  }
-  
-  /* Optional: Add a hover effect */
- #addBookButton:hover {
-    background-color: red !important;
-  }
+:root {
+  font-size: 20px;
+}
 
-  input[type=radio] {
-    display: inline-block; /* Ensure they are displayed inline */
-    visibility: visible; /* Ensure they are visible */
-    opacity: 1; /* Ensure full opacity */
-    position: static; /* Ensure no positioning issues */
-  }
+nav {
+  background-color: yellow;
+}
 
-  form {
-    background-color: #f9f9f9; /* Light background color */
-    padding: 20px; /* Padding around the form */
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    max-width: 400px; /* Limit the width */
-    margin: auto; /* Center the form */
-    font-family: Arial, sans-serif; /* Clean font */
-  }
-  
-  /* Form labels */
-  label {
-    display: block;
-    font-weight: bold;
-    padding: 0px;
-    margin-bottom: 0px;
-    color: #333; /* Dark text color */
-  }
+nav ul {
+  list-style-type: none; /* Remove bullets */
+  padding: 0; /* Remove default padding */
+  margin: 0; /* Remove default margin */
+  display: flex; /* Use flexbox to arrange items in a row */
+  justify-content: center;
+}
 
-  label[for="author"] {
-    font-weight: bold;
-    color: blue;
-    margin-top: 30px;
-  }
+nav ul li {
+  display: inline-block; /* Make <li> elements inline */
+  margin-right: 20px; /* Add space between items */
+}
 
-  label[for="genre"] {
-    font-weight: bold;
-    color: green;
-    margin-top: 30px;
-  }
+nav ul li a {
+  color: black; /* Set link color */
+}
 
-  label[for="bookCover"] {
-    font-weight: bold;
-    color: red;
-    margin-top: 30px;
-  }
+nav ul li:last-child {
+  margin-right: 0; /* Remove margin from the last item */
+}
 
-  label[for="bookStatus"] {
-    font-weight: bold;
-    color: orange;
-    margin-top: 60px;
-  }
 
-  label[for="toRead"],
-  label[for="currentlyReading"],
-  label[for="booksCompleted"] {
-    font-weight: lighter;
-    color: teal;
-    font-size: 16px;
-  }
-  
-  /* Input fields */
-  input[type="text"],
-  input[type="file"],
-  select {
-    padding: 5px; /* Padding inside the input */
-    margin-top: 5px;
-    border: 1px solid #ccc; /* Light border */
-    border-radius: 5px; /* Rounded corners */
-    box-sizing: border-box;
-    font-size: 16px; /* Increase font size */
-  }
-
-/* Add space between radio button group */
-.radio-group {
-    margin-bottom: 20px;
-    display: flex;
-    flex-direction: row; /* Stack the radio buttons vertically */
+  #addBookButton {
+      z-index: 100;
+      background-color: rgb(219, 219, 219);
+      color: white; /* White text */
+      padding: 10px 15px; /* Padding around the text */
+      border: none; /* Remove the border */
+      border-radius: 20px; /* Rounded corners */
+      cursor: pointer; /* Change cursor to pointer on hover */
+      font-size: 20px; /* Increase font size */
     }
-      
-.radio-option {
-    display: flex;
-    align-items: center; /* Align radio button and label vertically */
-    margin-bottom: 10px; /* Add space between each radio option */
-    }
-      
-.radio-option input[type="radio"] {
-    margin-right: 10px; /* Add space between radio button and label */
+    
+    /* Optional: Add a hover effect */
+   #addBookButton:hover {
+      background-color: red !important;
     }
   
-  /* Radio buttons alignment */
-  /* input[type="radio"] {
-    width: auto; /* Ensure radio buttons are not full-width */
-    /* margin-right: 10px; /* Space between button and label */
-  /* }
+    input[type=radio] {
+      display: inline-block; /* Ensure they are displayed inline */
+      visibility: visible; /* Ensure they are visible */
+      opacity: 1; /* Ensure full opacity */
+      position: static; /* Ensure no positioning issues */
+    }
   
-  /* Style the submit button */
-  button {
-    background-color: #4CAF50; /* Green background */
-    color: white; /* White text */
-    padding: 10px 20px; /* Padding around the text */
-    border: none; /* Remove border */
-    border-radius: 5px; /* Rounded corners */
-    cursor: pointer; /* Pointer cursor on hover */
-    font-size: 16px; /* Increase font size */
-    transition: background-color 0.3s ease; /* Smooth hover transition */
-  }
+    form {
+      background-color: #f9f9f9; /* Light background color */
+      padding: 20px; /* Padding around the form */
+      border-radius: 10px; /* Rounded corners */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+      max-width: 400px; /* Limit the width */
+      margin: auto; /* Center the form */
+      font-family: Arial, sans-serif; /* Clean font */
+    }
+    
+    /* Form labels */
+    label {
+      display: block;
+      font-weight: bold;
+      padding: 0px;
+      margin-bottom: 0px;
+      color: #333; /* Dark text color */
+    }
   
-  /* Hover effect for button */
-  button:hover {
-    background-color: #45a049; /* Darker green on hover */
-  }
+    label[for="author"] {
+      font-weight: bold;
+      color: blue;
+      margin-top: 30px;
+    }
   
-  /* Optional: Add a background color for the form container */
-  .container {
-    background-color: #fff; /* White background */
-    padding: 20px; /* Padding around the form */
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    max-width: 500px; /* Limit the width */
-    margin: 20px auto; /* Center the form */
+    label[for="genre"] {
+      font-weight: bold;
+      color: green;
+      margin-top: 30px;
+    }
+  
+    label[for="bookCover"] {
+      font-weight: bold;
+      color: red;
+      margin-top: 30px;
+    }
+  
+    label[for="bookStatus"] {
+      font-weight: bold;
+      color: orange;
+      margin-top: 60px;
+    }
+  
+    label[for="toRead"],
+    label[for="currentlyReading"],
+    label[for="booksCompleted"] {
+      font-weight: lighter;
+      color: teal;
+      font-size: 16px;
+    }
+    
+    /* Input fields */
+    input[type="text"],
+    input[type="file"],
+    select {
+      padding: 5px; /* Padding inside the input */
+      margin-top: 5px;
+      border: 1px solid #ccc; /* Light border */
+      border-radius: 5px; /* Rounded corners */
+      box-sizing: border-box;
+      font-size: 16px; /* Increase font size */
+    }
+  
+  /* Add space between radio button group */
+  .radio-group {
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: row; /* Stack the radio buttons vertically */
+      }
+        
+  .radio-option {
+      display: flex;
+      align-items: center; /* Align radio button and label vertically */
+      margin-bottom: 10px; /* Add space between each radio option */
+      }
+        
+  .radio-option input[type="radio"] {
+      margin-right: 10px; /* Add space between radio button and label */
+      }
+    
+    /* Radio buttons alignment */
+    /* input[type="radio"] {
+      width: auto; /* Ensure radio buttons are not full-width */
+      /* margin-right: 10px; /* Space between button and label */
+    /* }
+    
+    /* Style the submit button */
+    button {
+      background-color: #4CAF50; /* Green background */
+      color: white; /* White text */
+      padding: 10px 20px; /* Padding around the text */
+      border: none; /* Remove border */
+      border-radius: 5px; /* Rounded corners */
+      cursor: pointer; /* Pointer cursor on hover */
+      font-size: 16px; /* Increase font size */
+      transition: background-color 0.3s ease; /* Smooth hover transition */
+    }
+    
+    /* Hover effect for button */
+    button:hover {
+      background-color: #45a049; /* Darker green on hover */
+    }
+    
+    /* Optional: Add a background color for the form container */
+    .container {
+      background-color: #fff; /* White background */
+      padding: 20px; /* Padding around the form */
+      border-radius: 10px; /* Rounded corners */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+      max-width: 500px; /* Limit the width */
+      margin: 20px auto; /* Center the form */
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    
+    header {
+        background-color: #f4f4f4;
+        padding: 1rem;
+        text-align: center;
+    }
+    
+    .form-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+    
+    .form-container form {
+        background: #fff;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 300px;
+    }
+    
+    .form-container form label,
+    .form-container form input,
+    .form-container form select,
+    .form-container form button {
+        display: block;
+        margin-bottom: 1rem;
+    }
+    
+    button {
+        cursor: pointer;
+    }
+    
+    .bookshelf {
+        padding: 2rem;
+        z-index: 1;
+    }
+    
+    .book-list {
+        margin-top: 1rem;
+    }
+    
+    .book-list div {
+        background: #f4f4f4;
+        padding: 1rem;
+        border-radius: 4px;
+        margin-bottom: 0.5rem;
+    }
+    
+    .book-list h2 {
+        margin-top: 0;
+    }
+
+
+
+    
+    .codepen-bookshelf {
+      max-width: 1000px;
+      width: 80%;
+      display: flex;
+      justify-content: center;
+      flex-shrink: 0;
+      z-index: 1; /* Ensure books are in view */
+      position: relative;
+      height: auto; /* Allow height to be set by content */
+      box-sizing: border-box;
+      border-bottom: 16px solid #f3f3f3;
+      border-left: 20px solid transparent;
+      border-right: 20px solid transparent;
+    }
+    
+    .codepen-bookshelf::before {
+      content: "";
+      position: absolute;
+      top: 225px;
+      background: linear-gradient(90deg, #fafafa 0%, #ffffff 100%);
+      height: 26px;
+      width: calc(100% + 40px);
+      box-shadow: 0px -1px 6px rgba(0, 0, 0, 0.05), 0px 4px 16px rgba(0, 0, 0, 0.25);
+      z-index: 2;
+    }
+    
+    .codepen-bookshelf::after {
+      content: "";
+      height: 80px;
+      width: calc(100% + 40px);
+      position: absolute;
+      top: 42px;
+      display: block;
+      background: linear-gradient(180deg, #f3f3f3 0%, rgba(255, 255, 255, 0) 100%);
+      clip-path: polygon(0% 0%, 100% 0%, 97% 100%, 3% 100%);
+      z-index: -1;
+    }
+    
+    .codepenbooks {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10%;
+      width: 80%;
+      margin: auto;
+      transform: translateY(0); /* Remove the negative transform so books are in view */
+      padding: 0 0 2px;
+      z-index: 1;
+      position: relative;
+      top: 10px;
+    }
+    
+    .codepenbook {
+      width: 100%;
+      min-width: 150px; /* Prevents the book from shrinking too much */
+      border-radius: 3px 0.5px 0.5px 3px;
+      aspect-ratio: 115/180;
+      position: relative;
+      background: rgba(0, 0, 0, 0);
   }
+    
+    .codepenbook:hover::before,
+    .codepenbook:hover::after {
+      transition: transform 600ms cubic-bezier(0.34, 1.56, 0.64, 1), opacity 600ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    
+    .codepenbook:hover::before {
+      transform: translate(0, -45%) skew(3deg, -3deg) scale(1.35);
+    }
+    
+    .codepenbook:hover::after {
+      transform: translate(0, -45%) skew(3deg, -3deg) scale(1.275);
+    }
+    
+    .codepenbook:hover:nth-of-type(even)::before {
+      transform: translate(0, -45%) skew(-3deg, 3deg) scale(1.35);
+    }
+    
+    .codepenbook:hover:nth-of-type(even)::after {
+      transform: translate(0, -45%) skew(-3deg, 3deg) scale(1.275);
+    }
+    
+    .codepenbook::before,
+    .codepenbook::after {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: block;
+      content: " ";
+      transition: all 300ms ease-out;
+      background: var(--bg-image) center center/cover no-repeat, #f3f3f3;
+    }
+    
+    .codepenbook::before {
+      height: 100%;
+      box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25), inset 2px 0px 2px 1px rgba(29, 27, 27, 0.2);
+    }
+    
+    .codepenbook::after {
+      height: 102%;
+      z-index: 2;
+      opacity: 1;
+    }
