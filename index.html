@@ -6,11 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Book Queue</title>
     <link rel="stylesheet" href="style.css">
+    
   </head>
   <body>
-    <div>
+    <div class="header">
     <header>
-      <h1>Book Queue</h1>
+      <style>
+        body {
+          background-image: url(../book-queue/Assets/Images/WoodGrain.jpg);
+        }
+      </style>
+      <img src="../book-queue/Assets/Images/book_queue.png" />
+      <h1> Book Queue</h1>
       <nav>
         <ul>
           <li><a href="#home" id="filterAll">Home</a></li>
@@ -22,7 +29,9 @@
     </header>
     </div>
 
-<button id="addBookButton">+</button>
+
+
+<button id="addBookButton">Add a book!</button>
   <form id="bookForm" style="display:none;">
     <div>
         <label for="bookTitle">Book Title: </label>
