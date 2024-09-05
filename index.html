@@ -46,7 +46,7 @@
     <br>
 
     <div>
-        <label for="bookCover">(optional) Upload Book Cover:</label>
+        <label for="bookCover">Upload Book Cover:</label>
         <input type="file" id="bookCover" name="bookCover" accept="image/*">
     </div>
 
@@ -90,7 +90,6 @@
     <h2>Books I've Read</h2>
     <div id="books-read" class="book-list"></div> -->
     
-
 
 
 
@@ -142,6 +141,46 @@
 
 
 
+ <!-- Modal (Popup) for displaying book details -->
+ <div id="bookModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h3 id="modalTitle">Book Title</h3>
+    <p id="modalAuthor">Author: </p>
+    <p id="modalGenre">Genre: </p>
+
+    <form id="bookStatusForm">
+      <label>
+        <input type="radio" name="bookStatusModal" value="toRead"> Books To Read
+      </label><br>
+      <label>
+        <input type="radio" name="bookStatusModal" value="currentlyReading"> Currently Reading
+      </label><br>
+      <label>
+        <input type="radio" name="bookStatusModal" value="booksCompleted"> Books Completed
+      </label>
+    </form>
+
+      <h3>Rating:</h3>
+
+      <div class="rate">
+        <input type="radio" id="star5" name="rate" value="5" />
+        <label for="star5" title="text">5 stars</label>
+        <input type="radio" id="star4" name="rate" value="4" />
+        <label for="star4" title="text">4 stars</label>
+        <input type="radio" id="star3" name="rate" value="3" />
+        <label for="star3" title="text">3 stars</label>
+        <input type="radio" id="star2" name="rate" value="2" />
+        <label for="star2" title="text">2 stars</label>
+        <input type="radio" id="star1" name="rate" value="1" />
+        <label for="star1" title="text">1 star</label>
+      </div>
+
+      <button id="saveStatus">Save</button>
+
+
+
+</div>
 
 
   <script src="script.js"></script>
