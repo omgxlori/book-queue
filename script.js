@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let bookIndex = 0; // This tracks which book the next cover should apply to globally
     const addButton = document.getElementById('addBookButton');
     const form = document.getElementById('bookForm');
+    const closeFormButton = document.getElementById('closeFormButton');
     const booksOnShelf = document.querySelectorAll('.codepenbook');
     
     // Modal elements
@@ -17,6 +18,10 @@ document.addEventListener('DOMContentLoaded', function () {
     // Toggle form visibility
     addButton.addEventListener('click', function () {
         form.style.display = (form.style.display === 'none' || form.style.display === '') ? 'block' : 'none';
+    });
+
+    closeFormButton.addEventListener('click', function () {
+        form.style.display = 'none';
     });
 
     // Handle form submission
@@ -108,6 +113,8 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+
+
     // Open modal for book details
     booksOnShelf.forEach((bookElement, index) => {
         bookElement.addEventListener('click', function () {
@@ -139,19 +146,12 @@ document.addEventListener('DOMContentLoaded', function () {
     saveStatusButton.onclick = function () {
         let books = JSON.parse(localStorage.getItem('books')) || [];
         const selectedStatus = document.querySelector('input[name="bookStatusModal"]:checked').value;
-
-        // Get the selected rating, but it's optional, so handle cases where no rating is selected
-        const selectedRatingElement = document.querySelector('input[name="rate"]:checked');
-        const selectedRating = selectedRatingElement ? selectedRatingElement.value : null;
+        const selectedRating = document.querySelector('input[name="rate"]:checked').value;
 
         if (currentBookIndex !== null) {
-            // Update the current book's status
+            // Update the current book's status and rating
             books[currentBookIndex].status = selectedStatus;
-
-            // Only update rating if one is selected
-            if (selectedRating !== null) {
-                books[currentBookIndex].rating = selectedRating;
-            }
+            books[currentBookIndex].rating = selectedRating;
 
             // Save the updated books array to local storage
             localStorage.setItem('books', JSON.stringify(books));
