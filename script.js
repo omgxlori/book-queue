@@ -1,20 +1,31 @@
-document.addEventListener('DOMContentLoaded', function() {
-    let bookIndex = 0;  // This tracks which book the next cover should apply to globally
-
+document.addEventListener('DOMContentLoaded', function () {
+    let bookIndex = 0; // This tracks which book the next cover should apply to globally
     const addButton = document.getElementById('addBookButton');
     const form = document.getElementById('bookForm');
+    const closeFormButton = document.getElementById('closeFormButton');
     const booksOnShelf = document.querySelectorAll('.codepenbook');
+    
+    // Modal elements
+    const modal = document.getElementById("bookModal");
+    const closeModalButton = document.getElementsByClassName("close")[0];
+    const saveStatusButton = document.getElementById("saveStatus");
+
+    let currentBookIndex = null; // Keep track of which book is currently being edited
 
     // Load existing books from local storage on page load
     renderBooks();
 
     // Toggle form visibility
-    addButton.addEventListener('click', function() {
+    addButton.addEventListener('click', function () {
         form.style.display = (form.style.display === 'none' || form.style.display === '') ? 'block' : 'none';
     });
 
+    closeFormButton.addEventListener('click', function () {
+        form.style.display = 'none';
+    });
+
     // Handle form submission
-    form.addEventListener('submit', function(event) {
+    form.addEventListener('submit', function (event) {
         event.preventDefault(); // Prevent the default form submission
 
         const title = form.querySelector('#bookTitle').value;
@@ -26,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (coverInput.files && coverInput.files[0] && bookIndex < booksOnShelf.length) {
             const reader = new FileReader();
-            reader.onloadend = function() {
+            reader.onloadend = function () {
                 coverURL = reader.result;
 
                 booksOnShelf[bookIndex].style.setProperty('--bg-image', `url('${coverURL}')`);
@@ -40,7 +51,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     author: author,
                     genre: genre,
                     status: status,
-                    cover: coverURL
+                    cover: coverURL,
+                    rating: 0 // Default rating
                 };
 
                 saveBookToLocalStorage(book);
@@ -57,7 +69,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 author: author,
                 genre: genre,
                 status: status,
-                cover: ''
+                cover: '',
+                rating: 0 // Default rating
             };
             saveBookToLocalStorage(book);
             form.reset();
@@ -66,7 +79,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Event listeners for the navigation options
     document.getElementById('filterToRead').addEventListener('click', function() {
         filterBooksByStatus('toRead');
     });
@@ -100,6 +112,69 @@ document.addEventListener('DOMContentLoaded', function() {
             book.style.pointerEvents = 'all'; // Re-enable interaction
         });
     }
+
+
+
+    // Open modal for book details
+    booksOnShelf.forEach((bookElement, index) => {
+        bookElement.addEventListener('click', function () {
+            let books = JSON.parse(localStorage.getItem('books')) || [];
+            const book = books[index];
+
+            if (book) {
+                currentBookIndex = index; // Track which book is being edited
+                document.getElementById("modalTitle").textContent = book.title;
+                document.getElementById("modalAuthor").textContent = `Author: ${book.author}`;
+                document.getElementById("modalGenre").textContent = `Genre: ${book.genre}`;
+
+                // Set book status in modal
+                document.querySelector(`input[name="bookStatusModal"][value="${book.status}"]`).checked = true;
+
+                // Set the rating in modal
+                if (book.rating) {
+                    document.querySelector(`input[name="rate"][value="${book.rating}"]`).checked = true;
+                } else {
+                    document.querySelectorAll('input[name="rate"]').forEach(input => input.checked = false);
+                }
+
+                modal.style.display = "block";
+            }
+        });
+    });
+
+    // Save book status and rating from modal to local storage
+    saveStatusButton.onclick = function () {
+        let books = JSON.parse(localStorage.getItem('books')) || [];
+        const selectedStatus = document.querySelector('input[name="bookStatusModal"]:checked').value;
+        const selectedRating = document.querySelector('input[name="rate"]:checked').value;
+
+        if (currentBookIndex !== null) {
+            // Update the current book's status and rating
+            books[currentBookIndex].status = selectedStatus;
+            books[currentBookIndex].rating = selectedRating;
+
+            // Save the updated books array to local storage
+            localStorage.setItem('books', JSON.stringify(books));
+
+            // Update the bookshelf display
+            renderBooks();
+
+            // Close the modal
+            modal.style.display = "none";
+        }
+    };
+
+    // Close modal
+    closeModalButton.onclick = function () {
+        modal.style.display = "none";
+    };
+
+    // Close modal when clicking outside
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    };
 
     // Save book to local storage
     function saveBookToLocalStorage(book) {
