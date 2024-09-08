@@ -15,7 +15,7 @@ height: 30px;
   max-height: 0px;
 }
 
-nav ul {
+ul {
   list-style-type: none; /* Remove bullets */
   padding: 0; /* Remove default padding */
   margin: 0; /* Remove default margin */
@@ -23,14 +23,14 @@ nav ul {
   justify-content: center;
 }
 
-nav ul li {
+ul li {
   display: inline-block; /* Make <li> elements inline */
   margin-right: 20px; /* Add space between items */
   font-family: 'Orbitron' ;
 }
 
 nav ul li a {
-  color: black; /* Set link color */
+  color:black; /* Set link color */
 }
 
 nav ul li:last-child {
@@ -40,10 +40,11 @@ nav ul li:last-child {
 a {
   text-decoration: none;
   height: 100%;
-  padding: 0px 20px;
+  padding: 0px;
+  padding-top: 50px;
   display: table;
+  color: yellow;
 }
-
 
   #addBookButton {
       z-index: 100;
