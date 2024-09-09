@@ -38,7 +38,7 @@ nav ul li:last-child {
   margin-right: 0; /* Remove margin from the last item */
 }
 
-a {
+.nav a {
   text-decoration: none;
   height: 100%;
   padding: 0px;
@@ -197,7 +197,7 @@ a:hover {
     }
     
     header {
-        width: 100%;
+        width: auto;
         height: 80px;
         background-color: #331e08;
         padding: 1rem;
@@ -504,4 +504,65 @@ a:hover {
     display: inline-flex; /* Optional: Makes it easier to control alignment */
     align-items: center; /* Optional: Center-aligns the icons vertically */
     justify-content: center; /* Optional: Center-aligns the icons horizontally */
+}
+
+
+
+
+/* iPad Pro specific adjustments */
+@media only screen and (max-width: 1024px) and (min-width: 768px) {
+  .codepenbooks {
+    margin-left: 10px; /* Shift to the left */
+    transform: translateX(-20px); /* Additional fine-tuning */
+  }
+}
+
+@media only screen and (max-width: 430px) {
+  /* Books grid layout for small screens */
+
+  header {
+    width: 100%; /* Full width of the page */
+    text-align: center; /* Center the header content */
+    padding: 20px; /* Add some padding to the header */
+  }
+
+  nav {
+    display: inline-block;
+    text-align: center; /* Center the contents if needed */
+    width: 100%; /* Full width, adjust if necessary */
+  }
+  
+  /* Unordered list styling */
+  ul {
+    list-style-type: none; /* Remove default bullets */
+    padding: 0;
+    margin-bottom: 20px; /* Add space between ul and the button */
+  }
+  
+  ul li {
+    display: inline-block; /* Horizontally align the list items */
+    margin: 0 10px; /* Add some spacing between list items */
+  }
+
+  .codepenbooks {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two columns layout */
+    gap: 10px; /* Space between books */
+    justify-items: center;
+    width: 100%; /* Full width grid */
+    margin: auto;
+  }
+
+  /* Ensure books take their normal grid position */
+  .codepenbook {
+    width: 100%; /* Full width inside the grid column */
+    max-width: 150px; /* Limit book size */
+    aspect-ratio: 115/180; /* Maintain aspect ratio */
+  }
+
+  /* Stack the 3rd and 4th books in a new row */
+  .codepenbook:nth-child(3),
+  .codepenbook:nth-child(4) {
+    grid-row: 2 / span 2; /* Span across both columns, pushing to the next row */
+  }
 }
