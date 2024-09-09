@@ -73,6 +73,14 @@ a:hover {
       opacity: 1; /* Ensure full opacity */
       position: static; /* Ensure no positioning issues */
     }
+
+    span.close {
+      cursor: pointer;
+      position: relative;
+      left: 480px;
+      font-size: 30px;
+      z-index: 1001; /* Ensures it appears above other elements */
+  }
   
     form {
       background-color: #f9f9f9; /* Light background color */
