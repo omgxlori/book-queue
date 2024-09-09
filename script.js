@@ -94,20 +94,17 @@ document.addEventListener('DOMContentLoaded', function () {
             books[currentBookIndex].rating = selectedRating;
 
             // Update currentBook with the correct rating before updating the message
-            currentBook.status = selectedStatus;
             currentBook.rating = selectedRating;
 
-            // Save updated books to localStorage
             localStorage.setItem('books', JSON.stringify(books));
 
             // Update the message with the correct rating
-            updateShareMessage(currentBook, selectedStatus, selectedRating); // Ensure the rating is passed
+            updateShareMessage(currentBook, selectedStatus, selectedRating);
 
             modal.style.display = 'none';
             renderBooks();
         }
     });
-
 
     booksOnShelf.forEach((bookElement, index) => {
         bookElement.addEventListener('click', function () {
