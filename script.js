@@ -1,13 +1,14 @@
 document.addEventListener('DOMContentLoaded', function () {
     let bookIndex = 0; // This tracks which book the next cover should apply to globally
     const addButton = document.getElementById('addBookButton');
+    const formContainer = document.getElementById('formContainer'); // For form modal container
     const form = document.getElementById('bookForm');
-    const closeFormButton = document.getElementById('closeFormButton');
+    const closeFormButton = document.querySelector('.close'); // The close button for the "Add a Book" form
     const booksOnShelf = document.querySelectorAll('.codepenbook');
-    
-    // Modal elements
+
+    // Modal elements for book detail modal
     const modal = document.getElementById("bookModal");
-    const closeModalButton = document.getElementsByClassName("close")[0];
+    const closeModalButton = document.getElementsByClassName("close")[1]; // The close button for the book detail modal
     const saveStatusButton = document.getElementById("saveStatus");
 
     let currentBookIndex = null; // Keep track of which book is currently being edited
@@ -15,16 +16,24 @@ document.addEventListener('DOMContentLoaded', function () {
     // Load existing books from local storage on page load
     renderBooks();
 
-    // Toggle form visibility
+    // Show "Add a Book" form modal when the Add Book button is clicked
     addButton.addEventListener('click', function () {
-        form.style.display = (form.style.display === 'none' || form.style.display === '') ? 'block' : 'none';
+        formContainer.style.display = 'block';
     });
 
+    // Close "Add a Book" form modal when close button is clicked
     closeFormButton.addEventListener('click', function () {
-        form.style.display = 'none';
+        formContainer.style.display = 'none';
     });
 
-    // Handle form submission
+    // Close "Add a Book" form modal when clicking outside of it
+    window.onclick = function (event) {
+        if (event.target === formContainer) {
+            formContainer.style.display = 'none';
+        }
+    };
+
+    // Handle "Add a Book" form submission
     form.addEventListener('submit', function (event) {
         event.preventDefault(); // Prevent the default form submission
 
@@ -40,6 +49,10 @@ document.addEventListener('DOMContentLoaded', function () {
             reader.onloadend = function () {
                 coverURL = reader.result;
 
+                // Clear any previous background image before applying the new one
+                booksOnShelf[bookIndex].style.removeProperty('background-image');
+
+                // Set the new book cover
                 booksOnShelf[bookIndex].style.setProperty('--bg-image', `url('${coverURL}')`);
                 booksOnShelf[bookIndex].style.backgroundImage = `url('${coverURL}')`;
                 booksOnShelf[bookIndex].style.backgroundSize = 'cover';
@@ -58,8 +71,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 saveBookToLocalStorage(book);
                 bookIndex++;
 
+                // Reset the form and hide it
                 form.reset();
-                form.style.display = 'none';
+                formContainer.style.display = 'none';
                 renderBooks();
             };
             reader.readAsDataURL(coverInput.files[0]);
@@ -74,18 +88,49 @@ document.addEventListener('DOMContentLoaded', function () {
             };
             saveBookToLocalStorage(book);
             form.reset();
-            form.style.display = 'none';
+            formContainer.style.display = 'none';
             renderBooks();
         }
     });
 
+    // Save button functionality for modal (book detail modal)
+    saveStatusButton.addEventListener('click', function () {
+        if (currentBookIndex !== null) {
+            let books = JSON.parse(localStorage.getItem('books')) || [];
+    
+            // Get the selected status from the modal
+            const selectedStatus = document.querySelector('input[name="bookStatusModal"]:checked').value;
+    
+            // Get the selected rating from the modal (assuming the rating input has the name "rate")
+            const selectedRating = document.querySelector('input[name="rate"]:checked');
+    
+            // Update the book's status and rating
+            books[currentBookIndex].status = selectedStatus;
+    
+            // Only update the rating if a rating has been selected
+            if (selectedRating) {
+                books[currentBookIndex].rating = selectedRating.value;
+            }
+    
+            // Save updated books to localStorage
+            localStorage.setItem('books', JSON.stringify(books));
+    
+            // Close the modal after saving
+            modal.style.display = 'none';
+    
+            // Optionally re-render the book list to show updated statuses and ratings
+            renderBooks();
+        }
+    });
+
+    // Filter books by status
     document.getElementById('filterToRead').addEventListener('click', function() {
         filterBooksByStatus('toRead');
     });
     document.getElementById('filterCurrentlyReading').addEventListener('click', function() {
         filterBooksByStatus('currentlyReading');
     });
-    document.getElementById('filterCompleted').addEventListener('click', function() {
+    document.getElementById('filterCompleted').addEventListener('click', function () {
         filterBooksByStatus('booksCompleted');
     });
     document.getElementById('filterAll').addEventListener('click', function() {
@@ -113,8 +158,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-
-
     // Open modal for book details
     booksOnShelf.forEach((bookElement, index) => {
         bookElement.addEventListener('click', function () {
@@ -138,41 +181,45 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
 
                 modal.style.display = "block";
+                updateShareMessage(book);
             }
         });
     });
 
-    // Save book status and rating from modal to local storage
-    saveStatusButton.onclick = function () {
-        let books = JSON.parse(localStorage.getItem('books')) || [];
-        const selectedStatus = document.querySelector('input[name="bookStatusModal"]:checked').value;
-        const selectedRating = document.querySelector('input[name="rate"]:checked').value;
+    function updateShareMessage(book) {
+        const pageURL = encodeURIComponent(window.location.href);
+        let message = '';
 
-        if (currentBookIndex !== null) {
-            // Update the current book's status and rating
-            books[currentBookIndex].status = selectedStatus;
-            books[currentBookIndex].rating = selectedRating;
-
-            // Save the updated books array to local storage
-            localStorage.setItem('books', JSON.stringify(books));
-
-            // Update the bookshelf display
-            renderBooks();
-
-            // Close the modal
-            modal.style.display = "none";
+        switch (book.status) {
+            case 'Want To Read':
+                message = `I added a book to my Bookqueue wishlist: "${book.title}" by ${book.author}. Check it out! (${pageURL})`;
+                break;
+            case 'Currently Reading':
+                message = `I added a book to my Bookqueue currently reading list: "${book.title}" by ${book.author}. Check it out! (${pageURL})`;
+                break;
+            case 'Books Completed':
+                message = `I added a book to my Bookqueue completed reading list: "${book.title}" by ${book.author} with a rating of ${book.rating}. Check it out! (${pageURL})`;
+                break;
         }
-    };
 
-    // Close modal
+        const shareInput = document.getElementById('share-message');
+        if (shareInput) {
+            shareInput.value = message;
+        }
+    }
+
+    // Close modal (book detail modal)
     closeModalButton.onclick = function () {
         modal.style.display = "none";
     };
 
-    // Close modal when clicking outside
+    // Close modal when clicking outside (book detail modal)
     window.onclick = function (event) {
         if (event.target == modal) {
             modal.style.display = "none";
+        }
+        if (event.target == formContainer) {
+            formContainer.style.display = "none";
         }
     };
 
@@ -189,10 +236,15 @@ document.addEventListener('DOMContentLoaded', function () {
         booksOnShelf.forEach((bookElement, index) => {
             if (books[index]) {
                 const book = books[index];
+                // Clear previous background image before setting a new one
+                bookElement.style.removeProperty('background-image');
                 bookElement.style.setProperty('--bg-image', `url('${book.cover}')`);
                 bookElement.style.backgroundSize = 'cover';
                 bookElement.style.backgroundPosition = 'center';
                 bookElement.setAttribute('data-status', book.status); // Set status for filtering
+            } else {
+                // Clear background image if no book exists in that slot
+                bookElement.style.removeProperty('background-image');
             }
         });
     }
