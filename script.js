@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const author = encodeURIComponent(book.author);
 
         // Set Facebook share link
-        document.getElementById('facebook-share').href = `https://www.facebook.com/share_channel/`;
+        document.getElementById('facebook-share').href = `https://www.facebook.com/sharer/sharer.php?u=https://omgxlori.github.io/book-queue/`;
 
         // Set Twitter share link
         document.getElementById('twitter-share').href = `https://twitter.com/intent/tweet?`;
