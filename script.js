@@ -173,6 +173,40 @@ document.addEventListener('DOMContentLoaded', function () {
         updateShareMessage(book, status);
     });
 
+    document.getElementById('filterToRead').addEventListener('click', function() {
+        filterBooksByStatus('toRead');
+    });
+    document.getElementById('filterCurrentlyReading').addEventListener('click', function() {
+        filterBooksByStatus('currentlyReading');
+    });
+    document.getElementById('filterCompleted').addEventListener('click', function() {
+        filterBooksByStatus('booksCompleted');
+    });
+    document.getElementById('filterAll').addEventListener('click', function() {
+        showAllBooks();
+    });
+
+    // Filter books by status without disturbing the grid layout
+    function filterBooksByStatus(status) {
+        booksOnShelf.forEach(book => {
+            if (book.getAttribute('data-status') === status) {
+                book.style.opacity = '1';
+                book.style.pointerEvents = 'all'; // Re-enable interaction for filtered books
+            } else {
+                book.style.opacity = '0'; // Hide content without collapsing the grid
+                book.style.pointerEvents = 'none'; // Disable interaction for hidden books
+            }
+        });
+    }
+
+    // Show all books
+    function showAllBooks() {
+        booksOnShelf.forEach(book => {
+            book.style.opacity = '1';
+            book.style.pointerEvents = 'all'; // Re-enable interaction
+        });
+    }
+
     // Save button functionality for modal (book detail modal)
     saveStatusButton.addEventListener('click', function () {
         if (currentBookIndex !== null) {
