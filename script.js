@@ -55,11 +55,11 @@ document.addEventListener('DOMContentLoaded', function () {
         let message = '';
 
         if (status === 'toRead') {
-            message = `I added a book to my Book Queue "Books To Read" list: "${book.title}" by ${book.author}. Check it out! (${pageURL})`;
+            message = `I added a book to my Book Queue "Books To Read" list: "${book.title}" by ${book.author}. Check it out! https://omgxlori.github.io/book-queue/)`;
         } else if (status === 'currentlyReading') {
-            message = `I added a book to my Book Queue "Currently Reading" list: "${book.title}" by ${book.author}. Check it out! (${pageURL})`;
+            message = `I added a book to my Book Queue "Currently Reading" list: "${book.title}" by ${book.author}. Check it out! https://omgxlori.github.io/book-queue/`;
         } else if (status === 'booksCompleted') {
-            message = `I added a book to my Book Queue "Books Completed" list: "${book.title}" by ${book.author} with a rating of ${rating} stars. Check it out! (${pageURL})`;
+            message = `I added a book to my Book Queue "Books Completed" list: "${book.title}" by ${book.author} with a rating of ${rating} stars. Check it out! https://omgxlori.github.io/book-queue/`;
         }
 
         // Update the message in the share input field immediately
