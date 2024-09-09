@@ -12,6 +12,10 @@ h1 {
   2px 2px 0 black;  
 }
 
+#ueue {
+  right: 30px;
+}
+
 ul {
   list-style-type: none; /* Remove bullets */
   padding: 0; /* Remove default padding */
@@ -198,6 +202,7 @@ a:hover {
         background-color: #331e08;
         padding: 1rem;
         text-align: center;
+        border: black 4px solid;
     }
  
     .logo_container{
@@ -214,13 +219,15 @@ a:hover {
     }
 
     .header img {
-      float: left;
+      position: relative;
       width: 100px;
       height: 100px;
+      bottom: 25px;
     }
 
     .header h1 {
       position: relative;
+      display: flex;
       bottom: 15px;
       right: 10px;
       color: white;
