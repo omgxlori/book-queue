@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const saveStatusButton = document.getElementById("saveStatus");
 
     let currentBook = {}; // Store the current book being edited
+    let currentBookIndex = null; // Store the current book index being edited
 
     // Load existing books from local storage on page load
     renderBooks();
@@ -37,7 +38,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Copy to Clipboard functionality
     copyButton.addEventListener('click', function () {
-        // Select the text from the input
         shareMessageInput.select();
         shareMessageInput.setSelectionRange(0, 99999); // For mobile devices
 
@@ -62,12 +62,10 @@ document.addEventListener('DOMContentLoaded', function () {
             message = `I added a book to my Book Queue "Books Completed" list: "${book.title}" by ${book.author} with a rating of ${rating} stars. Check it out! https://omgxlori.github.io/book-queue/`;
         }
 
-        // Update the message in the share input field immediately
         if (shareMessageInput) {
             shareMessageInput.value = message;
         }
 
-        // Call setupShareLinks to update social media share links
         setupShareLinks(book);
     }
 
@@ -77,29 +75,9 @@ document.addEventListener('DOMContentLoaded', function () {
         const title = encodeURIComponent(book.title);
         const author = encodeURIComponent(book.author);
 
-        // Set Facebook share link
-        document.getElementById('facebook-share').href = `https://www.facebook.com/sharer/sharer.php?u=https://omgxlori.github.io/book-queue/`;
-
-        // Set Twitter share link
-        document.getElementById('twitter-share').href = `https://twitter.com/intent/tweet?`;
-
-        // Set LinkedIn share link
-        document.getElementById('linkedin-share').href = `https://www.linkedin.com/shareArticle?mini=true`;
-    }
-
-    // Attach an event listener to the radio buttons inside the modal
-    function attachModalRadioListeners() {
-        const modalRadioButtons = document.querySelectorAll('input[name="bookStatusModal"]');
-        modalRadioButtons.forEach(radio => {
-            radio.addEventListener('change', function () {
-                const status = this.value; // Get the selected status
-                // Update the message immediately using the currentBook object
-                if (currentBook.title) {
-                    const rating = document.querySelector('input[name="rate"]:checked') ? document.querySelector('input[name="rate"]:checked').value : 0;
-                    updateShareMessage(currentBook, status, rating);
-                }
-            });
-        });
+        document.getElementById('facebook-share').href = `https://www.facebook.com/sharer/sharer.php?u=${pageURL}`;
+        document.getElementById('twitter-share').href = `https://twitter.com/intent/tweet?text=Check out the book I'm reading: "${title}" by ${author}&url=${pageURL}`;
+        document.getElementById('linkedin-share').href = `https://www.linkedin.com/shareArticle?mini=true&url=${pageURL}&title=${title}&summary=${author}`;
     }
 
     // Attach event listeners to the star ratings inside the modal
@@ -108,11 +86,21 @@ document.addEventListener('DOMContentLoaded', function () {
         ratingInputs.forEach(ratingInput => {
             ratingInput.addEventListener('change', function () {
                 const selectedRating = this.value; // Get the selected rating
+                currentBook.rating = selectedRating;
                 const status = document.querySelector('input[name="bookStatusModal"]:checked') ? document.querySelector('input[name="bookStatusModal"]:checked').value : currentBook.status;
-                // Update the message immediately using the currentBook object and selected rating
-                if (currentBook.title) {
-                    updateShareMessage(currentBook, status, selectedRating);
-                }
+                updateShareMessage(currentBook, status, selectedRating);
+            });
+        });
+    }
+
+    // Attach an event listener to the radio buttons inside the modal
+    function attachModalRadioListeners() {
+        const modalRadioButtons = document.querySelectorAll('input[name="bookStatusModal"]');
+        modalRadioButtons.forEach(radio => {
+            radio.addEventListener('change', function () {
+                const status = this.value; // Get the selected status
+                const rating = currentBook.rating ? currentBook.rating : 0;
+                updateShareMessage(currentBook, status, rating);
             });
         });
     }
@@ -144,19 +132,17 @@ document.addEventListener('DOMContentLoaded', function () {
             reader.onloadend = function () {
                 coverURL = reader.result;
 
-                // Set the new book cover
                 booksOnShelf[bookIndex].style.setProperty('--bg-image', `url('${coverURL}')`);
                 booksOnShelf[bookIndex].style.backgroundImage = `url('${coverURL}')`;
                 booksOnShelf[bookIndex].style.backgroundSize = 'cover';
                 booksOnShelf[bookIndex].style.backgroundPosition = 'center';
-                booksOnShelf[bookIndex].setAttribute('data-status', status); // Set the status attribute
+                booksOnShelf[bookIndex].setAttribute('data-status', status); 
 
                 book.cover = coverURL;
 
                 saveBookToLocalStorage(book);
                 bookIndex++;
 
-                // Reset the form and hide it
                 form.reset();
                 formContainer.style.display = 'none';
                 renderBooks();
@@ -169,10 +155,10 @@ document.addEventListener('DOMContentLoaded', function () {
             renderBooks();
         }
 
-        // Update the copy-to-clipboard message
         updateShareMessage(book, status);
     });
 
+    // Filter functions
     document.getElementById('filterToRead').addEventListener('click', function() {
         filterBooksByStatus('toRead');
     });
@@ -186,24 +172,22 @@ document.addEventListener('DOMContentLoaded', function () {
         showAllBooks();
     });
 
-    // Filter books by status without disturbing the grid layout
     function filterBooksByStatus(status) {
         booksOnShelf.forEach(book => {
             if (book.getAttribute('data-status') === status) {
                 book.style.opacity = '1';
-                book.style.pointerEvents = 'all'; // Re-enable interaction for filtered books
+                book.style.pointerEvents = 'all'; 
             } else {
-                book.style.opacity = '0'; // Hide content without collapsing the grid
-                book.style.pointerEvents = 'none'; // Disable interaction for hidden books
+                book.style.opacity = '0'; 
+                book.style.pointerEvents = 'none'; 
             }
         });
     }
 
-    // Show all books
     function showAllBooks() {
         booksOnShelf.forEach(book => {
             book.style.opacity = '1';
-            book.style.pointerEvents = 'all'; // Re-enable interaction
+            book.style.pointerEvents = 'all'; 
         });
     }
 
@@ -212,27 +196,19 @@ document.addEventListener('DOMContentLoaded', function () {
         if (currentBookIndex !== null) {
             let books = JSON.parse(localStorage.getItem('books')) || [];
 
-            // Get the selected status from the modal
             const selectedStatus = document.querySelector('input[name="bookStatusModal"]:checked').value;
+            const selectedRating = document.querySelector('input[name="rate"]:checked') ? document.querySelector('input[name="rate"]:checked').value : currentBook.rating;
 
-            // Get the selected rating from the modal (assuming the rating input has the name "rate")
-            const selectedRating = document.querySelector('input[name="rate"]:checked');
-
-            // Update the book's status and rating
             books[currentBookIndex].status = selectedStatus;
+            books[currentBookIndex].rating = selectedRating;
 
-            // Only update the rating if a rating has been selected
-            if (selectedRating) {
-                books[currentBookIndex].rating = selectedRating.value;
-            }
+            currentBook.rating = selectedRating;
 
-            // Save updated books to localStorage
             localStorage.setItem('books', JSON.stringify(books));
 
-            // Close the modal after saving
-            modal.style.display = 'none';
+            updateShareMessage(currentBook, selectedStatus, selectedRating);
 
-            // Optionally re-render the book list to show updated statuses and ratings
+            modal.style.display = 'none';
             renderBooks();
         }
     });
@@ -244,15 +220,13 @@ document.addEventListener('DOMContentLoaded', function () {
             const book = books[index];
 
             if (book) {
-                currentBookIndex = index; // Track which book is being edited
+                currentBookIndex = index;
                 document.getElementById("modalTitle").textContent = book.title;
                 document.getElementById("modalAuthor").textContent = `Author: ${book.author}`;
                 document.getElementById("modalGenre").textContent = `Genre: ${book.genre}`;
 
-                // Set book status in modal
                 document.querySelector(`input[name="bookStatusModal"][value="${book.status}"]`).checked = true;
 
-                // Set the rating in modal
                 if (book.rating) {
                     document.querySelector(`input[name="rate"][value="${book.rating}"]`).checked = true;
                 } else {
@@ -260,10 +234,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
 
                 modal.style.display = "block";
-                currentBook = book; // Store the current book being viewed in the modal
-                updateShareMessage(book, book.status); // Update the message when the modal is opened
-                attachModalRadioListeners(); // Attach listeners for real-time message update
-                attachRatingListeners(); // Attach listeners for real-time rating update
+                currentBook = book;
+                updateShareMessage(book, book.status, book.rating);
+                attachModalRadioListeners();
+                attachRatingListeners();
             }
         });
     });
@@ -276,10 +250,10 @@ document.addEventListener('DOMContentLoaded', function () {
     // Close modal when clicking outside (book detail modal)
     window.onclick = function (event) {
         if (event.target === modal) {
-            modal.style.display = "none";
+            modal.style.display = 'none';
         }
         if (event.target === formContainer) {
-            formContainer.style.display = "none";
+            formContainer.style.display = 'none';
         }
     };
 
@@ -296,14 +270,12 @@ document.addEventListener('DOMContentLoaded', function () {
         booksOnShelf.forEach((bookElement, index) => {
             if (books[index]) {
                 const book = books[index];
-                // Clear previous background image before setting a new one
                 bookElement.style.removeProperty('background-image');
                 bookElement.style.setProperty('--bg-image', `url('${book.cover}')`);
                 bookElement.style.backgroundSize = 'cover';
                 bookElement.style.backgroundPosition = 'center';
-                bookElement.setAttribute('data-status', book.status); // Set status for filtering
+                bookElement.setAttribute('data-status', book.status); 
             } else {
-                // Clear background image if no book exists in that slot
                 bookElement.style.removeProperty('background-image');
             }
         });
